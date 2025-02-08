@@ -1,12 +1,11 @@
 import React from "react";
-import { SafeAreaView } from "react-native";
-import SignUp from "@/components/SignUp";
-const App = () => {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <SignUp />
-    </SafeAreaView>
-  );
-};
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Login from "../../components/Login";
 
-export default App;
+export default function app() { 
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Login />
+    </GestureHandlerRootView>
+  );
+}
