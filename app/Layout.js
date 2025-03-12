@@ -1,12 +1,6 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
-const Layout = () => {
-  return (
-    <View className="h-full w-full bg-pink-500">
-      <Text className="text-yellow-300 ">layout</Text>
-    </View>
-  )
+import { Stack } from "expo-router";
+export default function Navigation() {
+  return <Stack />;
 }
-
-export default Layout
