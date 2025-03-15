@@ -1,103 +1,87 @@
-import axios from "axios";
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSearchParams } from "expo-router/build/hooks";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+  Pressable,
+} from "react-native";
 
-const Otp = () => {
-  const [otp, setOtp] = useState(["", "", "", ""]);
+const Otp = ({ mailOrphone, otp, setOtp, formSubmit, setStep }) => {
   const inputs = useRef([]);
-  const router = useRouter();
-  const { mailOrphone } = useSearchParams();
-
-  const sendOtp = async () => {
-    console.log(otp, "mail");
-    console.log("running");
-    try {
-      const response = await axios.post(
-        "http://192.168.1.11:4000/signup/otpcheck",
-        {
-          mailOrphone,
-          otp,
-        }
-      );
-
-      if (response.status === 200) {
-        console.log(response.data.Email);
-        // Adjust based on response structure
-        const email = response.data?.data?.Email;
-        console.log(email, "success");
-        router.push("/(component)/(profile)/Profile");
-      } else {
-        throw new Error("Failed to verify OTP");
-      }
-    } catch (error) {
-      console.error("rejection", error.response?.data || error.message);
-    }
-  };
 
   const handleChange = (text, index) => {
-    if (!/^\d*$/.test(text)) return; // Allow only numbers
-
     let newOtp = [...otp];
-    newOtp[index] = text.substring(text.length - 1); // Only keep the last digit
+    newOtp[index] = text;
     setOtp(newOtp);
 
-    // Move to next input if a digit is entered and it's not the last box
-    if (text && index < otp.length - 1) {
-      inputs.current[index + 1]?.focus();
+    // Move to next input automatically
+    if (text && index < 3) {
+      inputs.current[index + 1].focus();
     }
   };
 
   const handleBackspace = (text, index) => {
-    let newOtp = [...otp];
-
     if (!text && index > 0) {
-      newOtp[index] = ""; // Clear current box
+      // Clear the value in the current field
+      let newOtp = [...otp];
+      newOtp[index] = "";
       setOtp(newOtp);
-      inputs.current[index - 1]?.focus(); // Move focus back
-    } else {
-      newOtp[index] = ""; // Allow deleting in the first box
-      setOtp(newOtp);
+
+      // Move focus to the previous input
+      inputs.current[index - 1].focus();
     }
   };
 
   return (
-    <View className="flex flex-col gap-8 align-items-center mt-8">
-      <Text className="text-lg mx-auto">Enter OTP</Text>
-
-      {/* OTP Input Boxes */}
-      <View className="flex-row gap-4 mt-4 mx-auto">
+    <View
+      className={`${
+        Platform.OS === "web" ? "w-[60%] h-[415px]" : "w-full"
+      } flex flex-col gap-8 p- items-center bg-white rounded-md m-auto p-5 py-8`}
+    >
+      <Text className="text-2xl font-bold mx-auto text-TealGreen ">
+        Enter Your OTP
+      </Text>
+      <View className="flex-row gap-4 mt-10 mx-auto">
         {otp.map((digit, index) => (
           <TextInput
             key={index}
             ref={(el) => (inputs.current[index] = el)}
-            className="w-12 h-12 text-center border-2 border-gray-300 rounded-md text-xl text-black"
+            className="w-12 h-12 text-center border-2 border-gray-300 rounded-md text-xl text-black outline-TealGreen"
             keyboardType="numeric"
             maxLength={1}
             value={digit}
             onChangeText={(text) => handleChange(text, index)}
-            onKeyPress={({ nativeEvent }) => {
-              if (nativeEvent.key === "Backspace") {
-                handleBackspace(digit, index);
-              }
-            }}
+            onKeyPress={({ nativeEvent }) =>
+              nativeEvent.key === "Backspace"
+                ? handleBackspace("", index)
+                : null
+            }
           />
         ))}
       </View>
 
       {/* Verify OTP Button */}
-      <TouchableOpacity
-        onPress={sendOtp}
-        className="bg-TealGreen  rounded-sm mt-4 w-24 py-2 mx-auto"
-      >
-        <Text className="text-white text-center">Verify OTP</Text>
+      <TouchableOpacity className="bg-TealGreen rounded-sm mt-4 w-24 py-2 mx-auto">
+        <Text
+          className="text-white text-center"
+          onPress={() => formSubmit({ mailOrphone, otp })}
+        >
+          Verify OTP
+        </Text>
       </TouchableOpacity>
 
       {/* Resend OTP */}
-      <TouchableOpacity className="mt-4 mx-auto">
-        <Text className="text-blue-500 mx-auto">Resend OTP</Text>
-      </TouchableOpacity>
+      <Pressable
+        className="mt-4 mx-auto"
+        onPress={() => {
+          setStep(4);
+        }}
+      >
+        <Text className="text-blue-500 mx-auto underline">Resend OTP</Text>
+      </Pressable>
     </View>
   );
 };

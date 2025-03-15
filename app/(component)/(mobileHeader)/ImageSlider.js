@@ -238,7 +238,15 @@
 // });
 
 import React, { useEffect, useRef, useState } from "react";
-import { View, Animated, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Animated,
+  Image,
+  StyleSheet,
+  Text,
+  Platform,
+} from "react-native";
+import Header from "../(header)/Header";
 
 const MovingImages = () => {
   // Array of images
@@ -259,15 +267,15 @@ const MovingImages = () => {
       // Slide the image in from the right (off-screen position 400)
       Animated.timing(position, {
         toValue: 0, // Move image to center (0 position)
-        duration: 1000, // 1 second to slide in
+        duration: 3000, // 1 second to slide in
         useNativeDriver: true,
       }).start(() => {
         // After the image has slid in, wait for 3 seconds and then slide it out
         setTimeout(() => {
           // Slide the image out to the left (position -400)
           Animated.timing(position, {
-             // Move the image off-screen to the left
-            duration: 500, // 1 second to slide out
+            // Move the image off-screen to the left
+            duration: 3000, // 1 second to slide out
             useNativeDriver: true,
           }).start(() => {
             // After sliding out, move to the next image
@@ -286,44 +294,57 @@ const MovingImages = () => {
   }, [position, images.length, currentIndex]);
 
   return (
-    <View style={styles.container}>
-      {/* Animated Image */}
-      <Animated.View
-        style={[
-          styles.animatedBox,
-          {
-            transform: [{ translateX: position }],
-          },
-        ]}
+    // <View style={styles.container} className="bg-red-500 ">
+    //   <View className="bg-red-500 z-50  ">
+    //
+    //   </View>
+    //   {/* Animated Image */}
+    // </View>
+    <View className="bg-white h-[300] relative flex items-center">
+      {/* Header Section */}
+      <View className="bg-TealGreen w-full h-[70%]">
+        <Header />
+      </View>
+
+      {/* Image Container with Aspect Ratio 16:9 */}
+      <View
+        className="bg-gray-500 w-[90%] absolute bottom-0 items-center justify-center"
+        style={{
+          aspectRatio: 16 / 9, // Ensure aspect ratio is 16:9 for the container
+          // height: Platform.OS === "ios" ? undefined : "56.25%", // Adjust for iOS specifically
+          width: "90%",
+        }}
       >
-        <Image
-          source={images[currentIndex]} // Use the current image based on the index
-          style={styles.image}
-        />
-      </Animated.View>
+        {/* Animated Box for Image */}
+        <Animated.View className="w-full h-full flex justify-center items-center overflow-hidden">
+          <Image
+            source={images[currentIndex]} // Use the current image based on the index
+            className="w-full h-full rounded-md"
+          />
+        </Animated.View>
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  animatedBox: {
-    width: 300,
-    height: 300,
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-  },
-  image: {
-    width: 300,
-    height: 300,
-    resizeMode: "cover",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   animatedBox: {
+//     width: 350,
+//     height: 200,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     overflow: "hidden",
+//   },
+//   image: {
+//     width: 450,
+//     height: 200,
+//     marginBottom: 0,
+//   },
+// });
 
 export default MovingImages;

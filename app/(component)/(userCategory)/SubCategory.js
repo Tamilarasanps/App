@@ -1,20 +1,18 @@
 import { View, Text, Pressable } from "react-native";
 import React from "react";
-
+import MObileHeader from "../(mobileHeader)/MobileHeader";
 import { router } from "expo-router";
-import Header from "../(header)/Header";
-
-export default function UserSubCategory() {
-  const product = () => {
+export default function SubCategory() {
+  const Product = () => {
     router.push("/(component)/(screen)/ProductList");
   };
   return (
     <View>
-      <Header />
-      <View className="flex items-center bg-yellow-600">
+      {/* <MObileHeader /> */}
+      <View className="flex items-center">
         <Pressable
-          className="mt-3 bg-red-600 w-[90%] h-[40] rounded-md flex items-center justify-center"
-          onPress={product}
+          className="mt-3 bg-blue-600 w-[90%] h-[40] rounded-md flex items-center justify-center"
+          onPress={Product}
         >
           <Text className="font-semibold text-xl text-white">
             Spinning Machines
@@ -60,8 +58,28 @@ export default function UserSubCategory() {
             Textile Reprocessing Machines
           </Text>
         </Pressable>
-        <Pressable className="mt-3 bg-red-600 w-[90%] h-[40] rounded-md flex items-center justify-center">
-          <Text className="font-semibold text-xl text-white">
+        <Pressable className="mt-3 bg-red-600 w-[90%] h-[40] rounded-md flex items-center justify-center ">
+          <Text className="font-semibold text-xl text-white mb-12">
+            Embroidery Machines
+          </Text>
+        </Pressable>
+        <Pressable className="mt-3 bg-red-600 w-[90%] h-[40] rounded-md flex items-center justify-center ">
+          <Text className="font-semibold text-xl text-white mb-12">
+            Embroidery Machines
+          </Text>
+        </Pressable>
+        <Pressable className="mt-3 bg-red-600 w-[90%] h-[40] rounded-md flex items-center justify-center ">
+          <Text className="font-semibold text-xl text-white mb-12">
+            Embroidery Machines
+          </Text>
+        </Pressable>
+        <Pressable className="mt-3 bg-red-600 w-[90%] h-[40] rounded-md flex items-center justify-center ">
+          <Text className="font-semibold text-xl text-white mb-12">
+            Embroidery Machines
+          </Text>
+        </Pressable>
+        <Pressable className="mt-3 bg-red-600 w-[90%] h-[40] rounded-md flex items-center justify-center ">
+          <Text className="font-semibold text-xl text-white mb-12">
             Embroidery Machines
           </Text>
         </Pressable>

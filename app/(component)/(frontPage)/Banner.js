@@ -17,8 +17,11 @@ export default function Banner() {
     return () => clearInterval(intervel);
   });
   return (
-    <View className="bg-TealGreen" style={{ height: 150, marginBottom: 180 }}>
-      <View className="justify-center items-center relative ]">
+    <View
+      className="bg-TealGreen relative mt-5"
+      style={{ height: 150, marginBottom: 180,  zIndex: -1 }}
+    >
+      <View className="justify-center items-center">
         <Image
           style={{
             width: "97%",
@@ -26,7 +29,7 @@ export default function Banner() {
             // marginTop: 40,
             borderRadius: 2,
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            // Lower z-index for the image, to make dropdown appear above it
+            zIndex: 10,
           }}
           source={img[image]}
         />

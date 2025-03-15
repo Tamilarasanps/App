@@ -11,7 +11,6 @@ export default function AppNavigation() {
     <Drawer.Navigator initialRouteName="Categorypage">
       <Drawer.Screen name="Main" component={HomePage} />
       <Drawer.Screen name="AdminCategory" component={AdminCategory} />
-      {/* <Drawer.Screen name="Home" component={BottomBar} /> */}
     </Drawer.Navigator>
   );
 }

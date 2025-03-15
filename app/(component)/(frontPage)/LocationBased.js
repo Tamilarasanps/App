@@ -1,6 +1,6 @@
-import { View, Text, Image, useWindowDimensions } from "react-native";
+import { View, Text, Image, useWindowDimensions,Pressable,ScrollView } from "react-native";
 import React from "react";
-import { Pressable, ScrollView } from "react-native-gesture-handler";
+// import { Pressable, ScrollView } from "react-native-gesture-handler";
 
 export default function LocationBased() {
   const { width } = useWindowDimensions();

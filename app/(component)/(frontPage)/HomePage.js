@@ -1,7 +1,7 @@
-import { View, Text, Platform } from "react-native";
+import { View, Text, Platform, ScrollView } from "react-native";
 import React from "react";
 import Recommeded from "./Recommeded";
-import { ScrollView } from "react-native-gesture-handler";
+// import { ScrollView } from "react-native-gesture-handler";,
 import Explore from "./Explore";
 import Contact from "./Contact";
 import Footer from "./Footer";
@@ -21,10 +21,9 @@ export default function HomePage() {
         {Platform.OS === "web" && <All />}
         {Platform.OS === "web" && <Banner />}
 
-        {Platform.OS !== "web" && <MObileHeader />}
         {Platform.OS !== "web" && <ImageSlider />}
 
-        <Recommeded />
+        <Recommeded /> 
         <Explore />
         {Platform.OS === "web" ? <GuidePage /> : null}
         <LocationBased />
