@@ -9,6 +9,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Divider } from "react-native-paper";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,12 +19,13 @@ export default function Header() {
   const sell = () => router.push("/(component)/(sell)/Sell");
   const chat = () => router.push("/(component)/(chat)/Chat");
   const profile = () => router.push("/(component)/(profile)/Profile");
+  const fav = () => router.push("/(component)/(screen)/Fav");
   const [searchBar, setSearchBar] = useState("");
 
   return (
     <View
       className="bg-TealGreen w-full z-10 px-4 py-3"
-      style={{ position: 'sticky',top:0 }}
+      style={{ position: "sticky", top: 0 }}
     >
       <View className="flex flex-row items-center justify-between">
         <Text className="text-white text-lg font-bold md:text-2xl">
@@ -31,7 +33,7 @@ export default function Header() {
         </Text>
 
         {/* Search Bar + Menu Icon */}
-        <View className="md:w-[60%] w-[60%] flex-row items-center">
+        <View className="md:w-[50%] w-[60%] flex-row items-center">
           <TextInput
             className="bg-white h-10  rounded-md px-3 py-2 text-gray-800 flex-1"
             placeholder="Search..."
@@ -45,15 +47,22 @@ export default function Header() {
           )}
         </View>
         {screen ? (
-          <View
-            className="flex flex-row gap-6 ms-24 space-x-4"
-          >
+          <View className="flex flex-row gap-6 space-x-4">
             <Pressable
               onPress={sell}
-              className="bg-red-500 py-2 px-6 rounded-md h-10 w-50 md:60"
+              className="bg-red-500 py-2 px-6 rounded-md h-10  md:60"
+              style={{ width: 150 }}
             >
-              <Text className="text-white text-center text-lg font-semibold">
+              <Text className="text-white text-center text-lg font-semibold ">
                 Sell
+              </Text>
+            </Pressable>
+            <Pressable onPress={fav}>
+              <View className="ms-4">
+                <FontAwesome name="star" size={20} color="white" />
+              </View>
+              <Text className="text-white text-center text-md font-semibold">
+                WishList
               </Text>
             </Pressable>
             <Pressable onPress={chat}>
@@ -66,13 +75,21 @@ export default function Header() {
           </View>
         ) : (
           <View
-            className={`absolute right-0 top-[60px] bg-white w-[250px] p-2 rounded-b-sm shadow-lg ${
+            className={`absolute right-0 top-[60px] bg-white w-[250px] p-2 rounded-sm shadow-lg ${
               isOpen ? "flex" : "hidden"
             }`}
           >
+            <Pressable onPress={fav}>
+              <View className="flex flex-row items-center space-x-4 p-4 bg-gray-100 rounded-sm mb-2 ">
+                <FontAwesome name="star" size={20} color="teal" />
+                <Text className="text-gray-500 font-semibold text-lg">
+                  WishList
+                </Text>
+              </View>
+            </Pressable>
             <Pressable
               onPress={chat}
-              className="flex flex-row items-center space-x-4 p-4 bg-gray-100 rounded-md mb-2"
+              className="flex flex-row items-center space-x-4 p-4 bg-gray-100 rounded-sm mb-2"
             >
               <MaterialIcons name="chat" size={30} color="teal" />
               <Text className="text-gray-500 font-semibold text-lg">
@@ -80,11 +97,9 @@ export default function Header() {
               </Text>
             </Pressable>
 
-            <Divider />
-
             <Pressable
               onPress={profile}
-              className="flex flex-row items-center space-x-3 p-4 bg-gray-100 rounded-md mb-2"
+              className="flex flex-row items-center space-x-3 p-4 bg-gray-100 rounded-sm mb-2"
             >
               <MaterialIcons name="account-circle" size={40} color="teal" />
               <Text className="text-gray-500 font-semibold text-lg">

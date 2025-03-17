@@ -400,9 +400,10 @@ import { Dropdown } from "react-native-element-dropdown";
 import { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { Video } from "expo-av";
-import axios from "axios";
 import Toast from "react-native-toast-message";
 import Header from "../(header)/Header";
+import { sendApi } from "../(services)/Api";
+// import { sendProductData } from "../(services)/SellPageApi";
 
 export default function Sell() {
   const [value, setValue] = useState("");
@@ -529,110 +530,137 @@ export default function Sell() {
     setSelectedVideo(newVid);
   };
 
-  const sentData = async () => {
-    if (
-      !value ||
-      !subcato ||
-      !machineMake ||
-      !price ||
-      !description ||
-      !radiobtn
-    ) {
-      Toast.show({
-        type: "error",
-        text1: "Missing Fields",
-        text2: "Please fill all required fields before submitting.",
-        position: "top",
-        topOffset: 0,
-      });
-      return;
-    }
+  // const sentData = async () => {
+  //   if (
+  //     !value ||
+  //     !subcato ||
+  //     !machineMake ||
+  //     !price ||
+  //     !description ||
+  //     !radiobtn
+  //   ) {
+  //     Toast.show({
+  //       type: "error",
+  //       text1: "Missing Fields",
+  //       text2: "Please fill all required fields before submitting.",
+  //       position: "top",
+  //       topOffset: 0,
+  //     });
+  //     return;
+  //   }
 
-    if (
-      (!selectedImage || selectedImage.length === 0) &&
-      (!selectedVideo || selectedVideo.length === 0)
-    ) {
-      Toast.show({
-        type: "error",
-        text1: "No Media Selected",
-        text2: "Please upload at least one image or video.",
-        position: "top",
-        topOffset: 0,
-      });
-      return;
-    }
+  //   if (
+  //     (!selectedImage || selectedImage.length === 0) &&
+  //     (!selectedVideo || selectedVideo.length === 0)
+  //   ) {
+  //     Toast.show({
+  //       type: "error",
+  //       text1: "No Media Selected",
+  //       text2: "Please upload at least one image or video.",
+  //       position: "top",
+  //       topOffset: 0,
+  //     });
+  //     return;
+  //   }
 
-    const formData = new FormData();
-    formData.append("industry", value);
-    formData.append("category", subcato);
-    formData.append("make", machineMake);
-    formData.append("price", price);
-    formData.append("negotiable", negotiable ? "true" : "false");
-    formData.append("description", description);
+  //   const formData = new FormData();
+  //   formData.append("industry", value);
+  //   formData.append("category", subcato);
+  //   formData.append("make", machineMake);
+  //   formData.append("price", price);
+  //   formData.append("negotiable", negotiable ? "true" : "false");
+  //   formData.append("description", description);
 
-    selectedImage?.forEach((img) => {
-      if (img?.file) {
-        formData.append("images", img.file);
-      }
-    });
+  //   selectedImage?.forEach((img) => {
+  //     if (img?.file) {
+  //       formData.append("images", img.file);
+  //     }
+  //   });
 
-    selectedVideo?.forEach((vid) => {
-      if (vid?.file) {
-        formData.append("videos", vid.file);
-      }
-    });
+  //   selectedVideo?.forEach((vid) => {
+  //     if (vid?.file) {
+  //       formData.append("videos", vid.file);
+  //     }
+  //   });
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/productupload",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      console.log(response.status, "uploaded successfully data");
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:5000/productupload",
+  //       formData,
+  //       { headers: { "Content-Type": "multipart/form-data" } }
+  //     );
+  //     console.log(response.status, "uploaded successfully data");
 
-      if (response.status === 201 || response.status === 200) {
-        // Reset all states
+  //     if (response.status === 201 || response.status === 200) {
+  //       // Reset all states
 
-        Toast.show({
-          type: "success",
-          text1: "Success",
-          text2: response.data.message || "Data uploaded successfully!",
-          position: "top",
-          topOffset: 0,
-        });
+  //       Toast.show({
+  //         type: "success",
+  //         text1: "Success",
+  //         text2: response.data.message || "Data uploaded successfully!",
+  //         position: "top",
+  //         topOffset: 0,
+  //       });
 
-        setTimeout(() => {
-          setValue("");
-          setSubcato("");
-          setMachineMake("");
-          setPrice("");
-          setNegotiable(false);
-          setDescription("");
-          setSelectedImage([]);
-          setRadiobtn("");
-          setSelectedVideo([]);
-        }, 1000);
-      } else {
-        Toast.show({
-          type: "error",
-          text1: "Upload Failed",
-          text2: "Something went wrong. Please try again.",
-          position: "top",
-          topOffset: 0,
-        });
-      }
-    } catch (error) {
-      Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "Failed to send data. Please check your connection.",
-        position: "top",
-        topOffset: 0,
-      });
-      console.log("Error in sending data:", error.response);
-    }
+  //       setTimeout(() => {
+  //         setValue("");
+  //         setSubcato("");
+  //         setMachineMake("");
+  //         setPrice("");
+  //         setNegotiable(false);
+  //         setDescription("");
+  //         setSelectedImage([]);
+  //         setRadiobtn("");
+  //         setSelectedVideo([]);
+  //       }, 1000);
+  //     } else {
+  //       Toast.show({
+  //         type: "error",
+  //         text1: "Upload Failed",
+  //         text2: "Something went wrong. Please try again.",
+  //         position: "top",
+  //         topOffset: 0,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     Toast.show({
+  //       type: "error",
+  //       text1: "Error",
+  //       text2: "Failed to send data. Please check your connection.",
+  //       position: "top",
+  //       topOffset: 0,
+  //     });
+  //     console.log("Error in sending data:", error.response);
+  //   }
+  // };
+
+  const resetForm = () => {
+    setValue(""),
+      setSubcato(""),
+      setMachineMake(""),
+      setRadiobtn(""),
+      setPrice(""),
+      setSelectedImage([]),
+      setSelectedVideo([]),
+      setNegotiable(""),
+      setDescription("");
   };
+  // console.log("form resting...", resetForm);
 
+  const handleSumbit = async () => {
+    await sendApi({
+      value,
+      subcato,
+      machineMake,
+      radio,
+      price,
+      selectedImage,
+      selectedVideo,
+      negotiable,
+      description,
+      resetForm,
+    });
+  };
   return (
     <SafeAreaView className="flex-1">
       <View className="absolute top-10 left-0 right-0 z-50">
@@ -903,7 +931,7 @@ export default function Sell() {
             }}
           />
           <Pressable
-            onPress={sentData}
+            onPress={handleSumbit}
             className="bg-teal-600 w-max px-4 py-2 rounded-md mx-auto mt-12 mb-24"
           >
             <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>

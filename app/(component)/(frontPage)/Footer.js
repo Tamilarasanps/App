@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <View className="bg-gray-500 pb-5">
       {/* Company Information Section */}
-      <View className="px-6 py-4 flex flex-row flex-wrap">
+      <View className="px-6 py-4 flex flex-row">
         <View className="w-full sm:w-1/2 mb-4 sm:mb-0">
           <Text className="text-white text-lg font-bold mb-4">
             Machine Street
@@ -25,7 +25,7 @@ const Footer = () => {
         </View>
 
         {/* Products and Useful Links Section */}
-        <View className="flex-row flex-wrap gap-10 ml-8 sm:ml-0 sm:mt-4">
+        <View className="flex-row gap-10 ml-8 sm:ml-0 sm:mt-4">
           <View className="ml-8 sm:ml-0 sm:w-full">
             <Pressable>
               <Text className="text-white mt-2">About Us</Text>
@@ -40,7 +40,8 @@ const Footer = () => {
               <Text className="text-white mt-2">Help</Text>
             </Pressable>
           </View>
-          <View className="ml-8 sm:ml-0 sm:w-full sm:mt-4">
+          {/* details */}
+          <View className="ml-8 sm:ml-0 sm:w-full ">
             <Text className="text-white text-lg font-bold">Contact</Text>
             <View className="flex-row items-center mt-2">
               <FontAwesome5 name="home" size={14} color="white" />

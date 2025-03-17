@@ -12,7 +12,7 @@ import All from "../(frontPage)/All";
 import ProductDetails from "./ProductDetails";
 import Footer from "../(frontPage)/Footer";
 import Recommeded from "../(frontPage)/Recommeded";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+  import FontAwesome from "react-native-vector-icons/FontAwesome";
 // import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 export default function SelectProduct() {
@@ -26,29 +26,38 @@ export default function SelectProduct() {
         <All />
 
         {/* Responsive Layout */}
-        <View className="flex flex-row mt-5">
-          {/* <Text className="text-xl mt-5 ms-6 ">Register Id :123344</Text> */}
-          <View className="mt-2 absolute right-10">
-            <FontAwesome name="star" size={30} color="#FFD700" />
+        <View>
+          {/* Star Icon */}
+          <View className="flex flex-row mt-5">
+            <View className="mt-2 absolute right-10">
+              <FontAwesome name="star" size={30} color="#FFD700" />
+            </View>
           </View>
-        </View>
-        <View className="flex flex-row">
+
+          {/* Name and Share Icon */}
+          <View className="flex flex-row mt-3">
+            <Text
+              className="text-xl mt-3 ms-6"
+              style={{ marginLeft: Platform.OS === "web" ? "45%" : "" }}
+            >
+              Tamilarasan
+            </Text>
+            <View className="absolute right-10 mt-12 pt-3">
+              <FontAwesome name="share" size={30} color="gray" />
+            </View>
+          </View>
+
+          {/* Machine Name */}
           <Text
-            className="text-xl  mt-3 ms-6 "
-            style={{ marginLeft: Platform.OS === "web" ? "45%" : "" }}
+            className="text-2xl font-bold mt-2 ms-6 pt-3"
+            style={{
+              marginLeft: Platform.OS === "web" ? "45%" : "",
+              zIndex: -1,
+            }}
           >
-            Tamilarasan
+            Machine Name
           </Text>
-          <View className="absolute right-10 mt-12 pt-3">
-            <FontAwesome name="share" size={30} color="gray" />
-          </View>
         </View>
-        <Text
-          className="text-2xl font-bold  mt-2 ms-6 pt-3 "
-          style={{ marginLeft: Platform.OS === "web" ? "45%" : "" }}
-        >
-          Machine Name
-        </Text>
         <View
           style={{
             flexDirection: isScreen ? "row" : "column",
